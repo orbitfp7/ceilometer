@@ -132,6 +132,12 @@ DiskRateStats = collections.namedtuple('DiskRateStats',
                                         'write_requests_rate'])
 
 
+CheckpointStats = collections.namedtuple('CheckpointStats',
+                                         ['checkpoint_size',
+                                          'checkpoint_length',
+                                          'checkpoint_pause'])
+
+
 # Exception types
 #
 class InspectorException(Exception):
@@ -217,6 +223,9 @@ class Inspector(object):
         :return: for each disk, the number of bytes & operations
                  read and written per second, with the error count
         """
+        raise ceilometer.NotImplementedError
+
+    def inspect_checkpoint(self, instance):
         raise ceilometer.NotImplementedError
 
 

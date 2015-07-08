@@ -188,3 +188,11 @@ class LibvirtInspector(virt_inspector.Inspector):
                                              write_bytes=block_stats[3],
                                              errors=block_stats[4])
             yield (disk, stats)
+
+    def inspect_checkpoint(self, instance):
+        instance_name = util.instance_name(instance)
+        domain = self._lookup_by_uuid(instance)
+        info = domain.jobInfo()
+        return virt_inspector.CheckpointStats(checkpoint_size=info[12],
+                                              checkpoint_length=info[13],
+                                              checkpoint_pause=info[14])

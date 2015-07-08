@@ -30,6 +30,13 @@ sources:
           - "network.outgoing.packets"
       sinks:
           - network_sink
+      interval: 600
+      meters:
+          - "checkpoint.size"
+          - "checkpoint.length"
+          - "checkpoint.pause"
+      sinks:
+          - colo_sink
 sinks:
     - name: meter_sink
       transformers:
@@ -74,5 +81,9 @@ sinks:
                         name: "network.\\1.\\2.rate"
                         unit: "\\1/s"
                     type: "gauge"
+      publishers:
+          - notifier://
+    - name: colo_sink
+      transformers:
       publishers:
           - notifier://
