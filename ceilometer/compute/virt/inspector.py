@@ -135,7 +135,9 @@ DiskRateStats = collections.namedtuple('DiskRateStats',
 CheckpointStats = collections.namedtuple('CheckpointStats',
                                          ['checkpoint_size',
                                           'checkpoint_length',
-                                          'checkpoint_pause'])
+                                          'checkpoint_pause',
+                                          'checkpoint_count',
+                                          'checkpoint_proxyDiscompare'])
 
 
 # Exception types

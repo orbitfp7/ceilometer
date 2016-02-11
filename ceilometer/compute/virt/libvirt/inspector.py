@@ -195,4 +195,6 @@ class LibvirtInspector(virt_inspector.Inspector):
         info = domain.jobInfo()
         return virt_inspector.CheckpointStats(checkpoint_size=info[12],
                                               checkpoint_length=info[13],
-                                              checkpoint_pause=info[14])
+                                              checkpoint_pause=info[14],
+                                              checkpoint_count=info[15],
+                                              checkpoint_proxyDiscompare=info[16])

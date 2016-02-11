@@ -113,3 +113,60 @@ class CheckPointPausePollster(plugin.ComputePollster):
             except Exception as err:
                 LOG.exception(_('could not get checkpoint pause for %(id)s: %(e)s'),
                               {'id': instance.id, 'e': err})
+
+class CheckPointCount(plugin.ComputePollster):
+
+    def get_samples(self, manager, cache, resources):
+        for instance in resources:
+            LOG.debug(_('checking instance %s'), instance.id)
+            instance_name = util.instance_name(instance)
+            try:
+                checkpoint_count = manager.inspector.inspect_checkpoint(instance)[3]
+                LOG.debug(_("CHECKPOINT COUNT: %(instance)s %(time)d"),
+                          {'instance': instance.__dict__,
+                           'time': checkpoint_count})
+                yield util.make_sample_from_instance(
+                    instance,
+                    name='checkpoint.count',
+                    type=sample.TYPE_GAUGE,
+                    volume=checkpoint_count,
+                )
+            except virt_inspector.InstanceNotFoundException as err:
+                # Instance was deleted while getting samples. Ignore it.
+                LOG.debug(_('Exception while getting samples %s'), err)
+            except ceilometer.NotImplementedError:
+                # Selected inspector does not implement this pollster.
+                LOG.debug(_('Obtaining checkpoint count is not implemented for %s'
+                            ), manager.inspector.__class__.__name__)
+            except Exception as err:
+                LOG.exception(_('could not get checkpoint count for %(id)s: %(e)s'),
+                              {'id': instance.id, 'e': err})
+
+class CheckPointProxyDiscomparePollster(plugin.ComputePollster):
+
+    def get_samples(self, manager, cache, resources):
+        for instance in resources:
+            LOG.debug(_('checking instance %s'), instance.id)
+            instance_name = util.instance_name(instance)
+            try:
+                checkpoint_proxyDiscompare = manager.inspector.inspect_checkpoint(instance)[4]
+                LOG.debug(_("CHECKPOINT PROXY_DISCOMPARE: %(instance)s %(time)d"),
+                          {'instance': instance.__dict__,
+                           'time': checkpoint_proxyDiscompare})
+                yield util.make_sample_from_instance(
+                    instance,
+                    name='checkpoint.proxyDiscompare',
+                    type=sample.TYPE_GAUGE,
+                    volume=checkpoint_proxyDiscompare,
+                )
+            except virt_inspector.InstanceNotFoundException as err:
+                # Instance was deleted while getting samples. Ignore it.
+                LOG.debug(_('Exception while getting samples %s'), err)
+            except ceilometer.NotImplementedError:
+                # Selected inspector does not implement this pollster.
+                LOG.debug(_('Obtaining checkpoint proxy discompare is not implemented for %s'
+                            ), manager.inspector.__class__.__name__)
+            except Exception as err:
+                LOG.exception(_('could not get checkpoint proxy discompare for %(id)s: %(e)s'),
+                              {'id': instance.id, 'e': err})
+

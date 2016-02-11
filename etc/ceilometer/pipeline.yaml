@@ -35,6 +35,8 @@ sources:
           - "checkpoint.size"
           - "checkpoint.length"
           - "checkpoint.pause"
+          - "checkpoint.count"
+          - "checkpoint.proxyDiscompare"
       sinks:
           - colo_sink
 sinks:
