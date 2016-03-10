@@ -129,6 +129,7 @@ class CheckPointCount(plugin.ComputePollster):
                     instance,
                     name='checkpoint.count',
                     type=sample.TYPE_GAUGE,
+                    unit='checkpoint',
                     volume=checkpoint_count,
                 )
             except virt_inspector.InstanceNotFoundException as err:
@@ -157,6 +158,7 @@ class CheckPointProxyDiscomparePollster(plugin.ComputePollster):
                     instance,
                     name='checkpoint.proxyDiscompare',
                     type=sample.TYPE_GAUGE,
+                    unit='discompare',
                     volume=checkpoint_proxyDiscompare,
                 )
             except virt_inspector.InstanceNotFoundException as err:
