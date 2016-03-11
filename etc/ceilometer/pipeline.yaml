@@ -30,7 +30,8 @@ sources:
           - "network.outgoing.packets"
       sinks:
           - network_sink
-      interval: 600
+    - name: colo_source
+      interval: 60
       meters:
           - "checkpoint.size"
           - "checkpoint.length"
