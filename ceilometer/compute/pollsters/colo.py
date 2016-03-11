@@ -114,7 +114,7 @@ class CheckPointPausePollster(plugin.ComputePollster):
                 LOG.exception(_('could not get checkpoint pause for %(id)s: %(e)s'),
                               {'id': instance.id, 'e': err})
 
-class CheckPointCount(plugin.ComputePollster):
+class CheckPointCountPollster(plugin.ComputePollster):
 
     def get_samples(self, manager, cache, resources):
         for instance in resources:
